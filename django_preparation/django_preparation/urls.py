@@ -22,8 +22,15 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     # url(r'', include('loginapp.urls')),
+    url(r'^bookshop/', include('bookshop.urls')),
     url(r'^$', loginView.as_view(), name = 'login'),
+    url(r'^loginapp/', include('loginapp.urls')),
+    #url(r'^news/', newsView.as_view(), name='news'),
+    #url(r'^home/', homeView.as_view(), name='home'),
+    #url(r'^home/', homeView.as_view(), name='home'),
+
     #url(r'^login/$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm}, name='login'),
     #url(r'^logout/$', views.logout, {'next_page': '/login'}, name = 'login'),
 
 ]
+

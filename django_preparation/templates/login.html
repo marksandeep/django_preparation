@@ -1,68 +1,91 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
-    {% if form.errors %}
-
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-
-<p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-
-<p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="login-panel panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Please Sign In</h3>
-                </div>
-                <div class="panel-body">
-                    <form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-
-                        <p class="bs-component">
-                            <table>
-                                <tr>
-                                    <td>{{ form.username.label_tag }}</td>
-                                    <td>{{ form.username }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ form.password.label_tag }}</td>
-                                    <td>{{ form.password }}</td>
-                                </tr>
-                            </table>
-                        </p>
-                        <p class="bs-component">
-                            <center>
-                                <input class="btn btn-success btn-sm" type="submit" value="login" />
-                            </center>
-                        </p>
-                        <input type="hidden" name="next" value="{{ next }}" />
-                    </form>
+<html>
+<body class="bg">
+        <div class="container">
+            <div class="login-page">
+                <div class="login-outer">
+                    <div class="login">
+                        <!--<h1 class="logo"><a href="#"></a></h1>-->
+                        <div class="login-content">
+                            <div class="error red" id='login-error' style="display:none;"></div>
+                            {% if error_message %}
+                            <div class="error red" style="display:block;" id='login-serror'>
+                                 {{ error_message }}
+                            </div>
+                            {% endif %}
+                            <form method="post" action="{% url 'login' %}">
+                                    {% csrf_token %}
+                                        <table>
+                                            <div class="row">
+                                                <div class="input-field">
+                                                    <tr>
+                                                        <td>{{ form.username.label_tag }}</td>
+                                                        <td>{{ form.username }}</td>
+                                                    </tr>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field">
+                                                    <tr>
+                                                        <td>{{ form.password.label_tag }}</td>
+                                                        <td>{{ form.password }}</td>
+                                                    </tr>
+                                                </div>
+                                            </div>
+                                            <tr>
+                                                <td>{{ form.email.label_tag }}</td>
+                                                <td>{{ form.email }}</td>
+                                            </tr>
+                                        </table>
+                                <input  type="submit"  value="login" />
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </body>
+    <style>
+        .bg{ background:#009CE0; padding:0;}
+         body.bg{ padding:0;}
+        .login-page{width:372px; height:100%; margin:0 auto; display:table; text-align:center; vertical-align:middle;}
+        .login-outer{display: table-cell; vertical-align: middle;}
+        .login{ height:560px;border:0px solid #fff; padding:0px; border-radius:30px; text-align:left; background:#00AEEF;}
+        .login .logo{ margin:30px 0 0 0; padding:0; width:372px; height:277px; float:left; background:url(../images/login-bg.png) center 0 no-repeat;}
+        .login .logo a{ display:block; text-indent:-999em;}
+        .login-content{ float:left; width:60%; margin:14px 20% 0 20%}
+        .row{ width:100%; float:left; margin:0 0 14px 0;}
+        .login-content .input-field{ width:100%; float:left; border-radius:30px; overflow:hidden;}
+        .login-content .input-field .input-text{ width:100%; border:1px solid #8ecdf0; background:#8ecdf0; border-radius:30px;  -webkit-border-radius:30px;  padding:3% 5%; width:90%; color:#000;}
+        .login-content .input-field .input-text:focus{ background:#fff;}
+        .login-content .button-field{ width:100%; float:left;}
+
+        .login-content #keepmelogin{ margin:2px 4px 0 0; float:left;}
+        .login-content span{font-family: 'Conv_National-Book';color:#fff; float:left;}
+        /* Change by rupesh 29 may 2014*/
+        .login-content .button-field .button1{ background:#EC008C; border:0px; padding:7px 10px; border-radius:4px; color:#fff;font-size:13px;}
+        .login-content .button-field .buttonsubmit{ background:#0066b3; border:0px; padding:7px 10px; border-radius:4px; color:#fff;font-size:13px;}
+        .forgot-pass{background:#0066b3; border:0px; padding:7px 12px; border-radius:4px; color:#fff; display:inline-block; text-decoration:none; font-size:13px;}
+        .error{ font-size: 14px;}
+        .error.red{ color: #ff0000;}
+        .login-content .error{ color:#fff !important; padding:5px 5%; margin-bottom:4px;border-radius: 30px;font-family: 'Conv_National-Book'; line-height:20px;}
+        .container {
+            position: fixed;
+            width: 340px;
+            height: 280px;
+            top: 50%;
+            left: 50%;
+            margin-top: -140px;
+            margin-left: -170px;
+            }
+    </style>
+</html>
+
+
 
 {% endblock %}
 
-{% block javascript %}
 
 
-<script>
-{% if not user.is_authenticated %}
-$("ul.nav.navbar-nav.navbar-right").css("display","none");
-{% endif %}
-</script>
-
-{% endblock %}
